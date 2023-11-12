@@ -15,6 +15,7 @@ class TaskController extends Controller
      */
     public function index()
     {
+        // collection : eloquentからjsonに変換したapiを返す
         return TaskResource::collection(Task::all());
     }
 
@@ -39,7 +40,8 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        // make: idを指定してモデルを取得する
+        // makeメソッドは、APIリソースのインスタンスを作成するためのメソッド
         return TaskResource::make($task);
     }
 
