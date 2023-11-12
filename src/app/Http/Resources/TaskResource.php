@@ -16,6 +16,11 @@ class TaskResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            // 0/1だったけど(bool)でキャストしている
+            'is_completed'=> (bool)$this->is_completed,
+        ];
     }
 }
