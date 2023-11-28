@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('sex');
+            $table->float('gen');
+            $table->unsignedBigInteger('community_id');
+            $table->string('mail');
+            $table->string('password');
+            $table->unsignedBigInteger('role_id')->default(0)->comment('0:一般,1:サバリ,2:本部');
+            $table->foreign('role_id')->references('id')->on('role')->onDelete('cascade');
             $table->timestamps();
         });
     }
