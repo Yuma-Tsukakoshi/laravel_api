@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('event_id');
             $table->string('status_id')->default('0')->comment('0:未回答,1:参加,2:不参加,3:未定');
-            $table->string('comment')->comment('備考');
+            $table->string('comment')->comment('備考')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->timestamps();

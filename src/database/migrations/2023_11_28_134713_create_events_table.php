@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('community_id');
+            $table->float('gen');
+            $table->string('name');
+            $table->string('kind');
+            $table->dateTime('start_at');
+            $table->dateTime('end_at');
+            $table->dateTime('deadline');
             $table->timestamps();
         });
     }
