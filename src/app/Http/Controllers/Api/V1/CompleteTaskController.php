@@ -14,6 +14,7 @@ class CompleteTaskController extends Controller
      */
     public function __invoke(Request $request,Task $task)
     {
+        // __invoke: 動的にwebAPIを作成できる 
         $task->is_completed = $request->is_completed;
         $task->save();
         return TaskResource::make($task);
