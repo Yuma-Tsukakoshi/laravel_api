@@ -45,7 +45,6 @@ class TaskController extends Controller
     {
         $task->update($request->validated());
         return TaskResource::make($task);
-
     }
 
     /**
