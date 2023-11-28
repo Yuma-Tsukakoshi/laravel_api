@@ -9,8 +9,8 @@ info:
   version: 1.0.0
 
 servers:
-# TODO サーバーのURLを聞く local:mockサーバーのこと？ AWSとか
-  - url: http://localhost:3000
+# TODO サーバーのURLを聞く
+  - url: http://localhost:8080/api
     description: "ローカル環境(url仮)"
   - url: https://bkrs3waxwg.execute-api.ap-northeast-1.amazonaws.com/default
     description: "本番環境(url仮)"
@@ -121,7 +121,25 @@ paths:
         400:
           description: Invalid status value
           content: {}
-        
+    delete:
+      summary: 指定したIDのユーザーを削除
+      tags:
+        - users
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: user_id
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '204':
+          description: 'No Content'
+        '404':
+          description: 'Not Found'
+    
 components:
   schemas:
     Users:
