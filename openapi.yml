@@ -1,0 +1,150 @@
+# mock serverの起動
+# npx prism mock ./openapi/api-docs.yml -p 8080
+
+openapi: 3.0.3
+
+info:
+  title: EventApp API
+  description: JOBer養成のイベントアプリのAPI仕様書
+  version: 1.0.0
+
+servers:
+# TODO サーバーのURLを聞く local:mockサーバーのこと？ AWSとか
+  - url: http://localhost:3000
+    description: "ローカル環境(url仮)"
+  - url: https://bkrs3waxwg.execute-api.ap-northeast-1.amazonaws.com/default
+    description: "本番環境(url仮)"
+
+tags: 
+# APIの整理
+  - name: users
+    description: ユーザーに関するAPI
+  - name: events
+    description: イベントに関するAPI
+
+paths:
+# metadata: summary/ description / tags / deprecated(廃止)
+# request_parameters
+# request_body
+# responses
+  /users:
+    get:
+      summary: ユーザー一覧を取得
+      tags:
+        - users
+      deprecated: false
+      responses:
+        200:
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        400:
+          description: Invalid status value
+          content: {}
+
+    post:
+      summary: ユーザーを作成
+      tags:
+        - users
+      deprecated: false
+      # security:
+      #   - apikey_auth: []
+      requestBody:
+        description: 作成するユーザー情報
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: "山田太郎"
+                email:
+                  type: string
+                  example: "create@gmail.com"
+
+      responses:
+        201:
+          description: "成功"
+        # 400:
+        #   description: Invalid status value
+        #   content: {}
+
+  /users/{id}:
+    get:
+      summary: 指定したIDのユーザーを取得
+      tags:
+        - users
+      deprecated: false
+      parameters:
+        - name: id
+          # in: parameterの場所を指定
+          in: path
+          description: user_id
+          required: true
+          # schema: パラメータの型を指定
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Invalid status value
+          content: {}
+    
+    put:
+      summary: 指定したIDのユーザーを更新
+      tags:
+        - users
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: user_id
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        200:
+          description: "成功"
+        400:
+          description: Invalid status value
+          content: {}
+        
+components:
+  schemas:
+    Users:
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "山田太郎"
+        email:
+          type: string
+          example: "test@gmail.com"
+    
+  securitySchemes:
+    apikey_auth:
+      description: "API key authorization"
+      type: apiKey
+      in: header
+      name: "X-Api-Key"
