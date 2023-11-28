@@ -1,0 +1,53 @@
+openapi: 3.0.3
+
+info:
+  title: EventApp API
+  description: JOBer養成のイベントアプリのAPI仕様書
+  version: 1.0.0
+
+servers:
+# TODO サーバーのURLを聞く ローカルも合ってる？AWSとか
+  - url: http://localhost:3000
+    description: "ローカル環境(url仮)"
+  - url: https://bkrs3waxwg.execute-api.ap-northeast-1.amazonaws.com/default
+    description: "本番環境(url仮)"
+
+tags: 
+# APIの整理
+  - name: users
+    description: ユーザーに関するAPI
+  - name: events
+    description: イベントに関するAPI
+
+paths:
+# metadata: summary/ description / tags / deprecated
+# request_parameters
+# request_body
+# responses
+  /users:
+    get:
+      summary: ユーザー一覧を取得
+      tags:
+        - users
+      deprecated: false
+      responses:
+        "200":
+          description: "成功"
+
+  /users/{id}:
+    get:
+      summary: 指定したIDのユーザーを取得
+      tags:
+        - users
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: user_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "成功"
+
