@@ -11,7 +11,7 @@ info:
 servers:
 # TODO サーバーのURLを聞く
   - url: http://localhost:8080/api
-    description: "ローカル環境(url仮)"
+    description: "ローカル環境"
   - url: https://bkrs3waxwg.execute-api.ap-northeast-1.amazonaws.com/default
     description: "本番環境(url仮)"
 
@@ -156,9 +156,24 @@ components:
         name:
           type: string
           example: "山田太郎"
+        sex:
+          type: string
+          example: "男性"
+        gen:
+          type: string
+          example: "3.0"
+        community_id:
+          type: "string"
+          example: "1"
         email:
           type: string
           example: "test@gmail.com"
+        password:
+          type: string
+          example: "*******"
+        role_id:
+          type: string
+          example: "0"
     
   securitySchemes:
     apikey_auth:
