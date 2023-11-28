@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('mail')->unique();
             $table->string('password');
             $table->unsignedBigInteger('role_id')->default(0)->comment('0:一般,1:サバリ,2:本部' );
-            $table->foreign('role_id')->references('id')->on('role')->onDelete('cascade');
+            $table->foreign('role_id')->references('role_id')->on('role')->onDelete('cascade');
             $table->timestamps();
         });
     }
