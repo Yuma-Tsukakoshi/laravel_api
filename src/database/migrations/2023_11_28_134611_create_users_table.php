@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('sex');
             $table->float('gen');
-            $table->unsignedBigInteger('community_id');
-            $table->string('mail')->unique();
+            $table->integer('community_id');
+            $table->string('email')->unique();
             $table->string('password');
             $table->unsignedBigInteger('role_id')->default(0)->comment('0:一般,1:サバリ,2:本部' );
             $table->foreign('role_id')->references('role_id')->on('role')->onDelete('cascade');

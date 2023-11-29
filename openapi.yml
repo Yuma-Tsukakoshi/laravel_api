@@ -27,6 +27,8 @@ paths:
 # request_parameters
 # request_body
 # responses
+
+#======== user ===========#
   /users:
     get:
       summary: ユーザー一覧を取得
@@ -59,15 +61,31 @@ paths:
             schema:
               type: object
               properties:
-                id:
-                  type: integer
-                  example: 1
+                # id:
+                #   type: integer
+                #   example: 1
                 name:
                   type: string
                   example: "山田太郎"
+                sex:
+                  type: string
+                  example: "男性"
+                gen:
+                  type: number
+                  format: float
+                  example: 3.5
+                community_id:
+                  type: integer
+                  example: 1
                 email:
                   type: string
                   example: "create@gmail.com"
+                password:
+                  type: string
+                  example: "*******"
+                role_id:
+                  type: integer
+                  example: 1
 
       responses:
         201:
@@ -121,6 +139,7 @@ paths:
         400:
           description: Invalid status value
           content: {}
+
     delete:
       summary: 指定したIDのユーザーを削除
       tags:
@@ -130,6 +149,137 @@ paths:
         - name: id
           in: path
           description: user_id
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '204':
+          description: 'No Content'
+        '404':
+          description: 'Not Found'
+  
+#=================== event ======================#
+  /events:
+    get:
+      summary: イベント一覧を取得
+      tags:
+        - events
+      deprecated: false
+      responses:
+        200:
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Events'
+        400:
+          description: Invalid status value
+          content: {}
+
+    post:
+      summary: イベントを作成
+      tags:
+        - events
+      deprecated: false
+      # security:
+      #   - apikey_auth: []
+      requestBody:
+        description: 作成するイベント情報
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                community_id:
+                  type: integer
+                  example: 1
+                gen:
+                  type: number
+                  format: float
+                  example: 3.5
+                name:
+                  type: string
+                  example: "かださぽ"
+                kind:
+                  type: string
+                  example: "リアイベ"
+                start_at:
+                  type: string
+                  format: date-time
+                  example: "2023-12-01T12:00:00Z"
+                end_at:
+                  type: string
+                  format: date-time
+                  example: "2023-12-01T18:00:00Z"
+                deadline:
+                  type: string
+                  format: date-time
+                  example: "2023-11-30T18:00:00Z"
+
+      responses:
+        201:
+          description: "成功"
+        400:
+          description: Invalid status value
+          content: {}
+
+  /events/{id}:
+    get:
+      summary: 指定したIDのイベントを取得
+      tags:
+        - events
+      deprecated: false
+      parameters:
+        - name: id
+          # in: parameterの場所を指定
+          in: path
+          description: event_id
+          required: true
+          # schema: パラメータの型を指定
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        400:
+          description: Invalid status value
+          content: {}
+    
+    put:
+      summary: 指定したIDのイベントを更新
+      tags:
+        - events
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: event_id
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        200:
+          description: "成功"
+        400:
+          description: Invalid status value
+          content: {}
+
+    delete:
+      summary: 指定したIDのイベントを削除
+      tags:
+        - events
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: event_id
           required: true
           schema:
             type: integer
@@ -160,11 +310,12 @@ components:
           type: string
           example: "男性"
         gen:
-          type: string
-          example: "3.0"
+          type: number
+          format: float
+          example: 3.5
         community_id:
-          type: "string"
-          example: "1"
+          type: integer
+          example: 1
         email:
           type: string
           example: "test@gmail.com"
@@ -172,9 +323,46 @@ components:
           type: string
           example: "*******"
         role_id:
+          type: integer
+          example: 0
+        
+    Events:
+      type: array
+      items:
+        $ref: '#/components/schemas/Event'
+
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        community_id:
+          type: integer
+          example: 1
+        gen:
+          type: number
+          format: float
+          example: 3.5
+        name:
           type: string
-          example: "0"
-    
+          example: "かださぽ"
+        kind:
+          type: string
+          example: "リアイベ"
+        start_at:
+          type: string
+          format: date-time
+          example: "2023-12-01T12:00:00Z"
+        end_at:
+          type: string
+          format: date-time
+          example: "2023-12-01T18:00:00Z"
+        deadline:
+          type: string
+          format: date-time
+          example: "2023-11-30T18:00:00Z"
+
   securitySchemes:
     apikey_auth:
       description: "API key authorization"
