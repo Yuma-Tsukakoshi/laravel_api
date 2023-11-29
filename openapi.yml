@@ -292,13 +292,21 @@ paths:
 
 #=================== generation ======================#
 # TODO 各期生のメンバーを取得 queryで条件指定する -> endpoint合ってる？
-  /users/{gen}:
+  /users/{community_id}/{gen}:
     get:
       summary: 指定した期生のメンバーを取得
       tags:
         - users
       deprecated: false
       parameters:
+        - name: community_id
+          # in: path
+          in: query
+          description: community_id
+          required: true
+          schema:
+            type: integer
+          example: 1
         - name: gen
           # in: path
           in: query
