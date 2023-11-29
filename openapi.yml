@@ -28,7 +28,7 @@ paths:
 # request_body
 # responses
 
-#======== user ===========#
+#=================== user ======================#
   /users:
     get:
       summary: ユーザー一覧を取得
@@ -289,7 +289,99 @@ paths:
           description: 'No Content'
         '404':
           description: 'Not Found'
-    
+
+#=================== generation ======================#
+# TODO 各期生のメンバーを取得 queryで条件指定する -> endpoint合ってる？
+  /users/{gen}:
+    get:
+      summary: 指定した期生のメンバーを取得
+      tags:
+        - generations
+      deprecated: false
+      parameters:
+        - name: gen
+          # in: path
+          in: query
+          description: gen
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        200:
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        400:
+          description: Invalid status value
+          content: {}
+
+#=================== submission ======================#
+  /events/{id}/attend:
+    get:
+      summary: イベント参加者一覧を取得
+      tags:
+        - events
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: event_id
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        200:
+          description: "成功"
+        400:
+          description: Invalid status value
+          content: {}
+  
+  /events/{id}/absent:
+    get:
+      summary: イベント欠席者一覧を取得
+      tags:
+        - events
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: event_id
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        200:
+          description: "成功"
+        400:
+          description: Invalid status value
+          content: {}
+  
+  /events/{id}/unanswered:
+    get:
+      summary: イベント未回答者一覧を取得
+      tags:
+        - events
+      deprecated: false
+      parameters:
+        - name: id
+          in: path
+          description: event_id
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        200:
+          description: "成功"
+        400:
+          description: Invalid status value
+          content: {}
+
 components:
   schemas:
     Users:
