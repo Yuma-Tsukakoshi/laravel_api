@@ -296,7 +296,7 @@ paths:
     get:
       summary: 指定した期生のメンバーを取得
       tags:
-        - generations
+        - users
       deprecated: false
       parameters:
         - name: gen
